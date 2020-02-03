@@ -20,6 +20,10 @@
     <listener>
       <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+    
+    <listener>
+        <listener-class>com.riter.atcrowdfunding.listener.StartSystemListener</listener-class>
+    </listener>
 
     <!--
         过滤器默认对request过滤
@@ -35,8 +39,7 @@
     -->
     <filter>
       <filter-name>encoding</filter-name>
-      <filter-class>org.springframework.web.filter.CharacterEncodingFilter
-      </filter-class>
+      <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
       <init-param>
         <param-name>encoding</param-name>
         <param-value>UTF-8</param-value>

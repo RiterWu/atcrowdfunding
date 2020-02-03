@@ -35,7 +35,8 @@
         <property name="prefix" value="/WEB-INF/views/"></property>
         <property name="suffix" value=".jsp"></property>
     </bean>
-    
+
+    <!-- 异常处理   -->
     <bean id="exceptionResolver"  
         class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">  
         <property name="exceptionMappings">  
@@ -44,7 +45,10 @@
             </props>  
         </property>  
     </bean>
-	
+    
+    <!--静态资源放行    -->
+	<!--<mvc:resources mapping="/static/**" location="/static/"/>-->
+    
 	<!-- 文件上传 -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" p:defaultEncoding="UTF-8">
         <property name="maxUploadSize" value="2097152"/>
