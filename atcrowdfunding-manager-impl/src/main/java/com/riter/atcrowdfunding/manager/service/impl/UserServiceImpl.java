@@ -4,9 +4,11 @@ import com.riter.atcrowdfunding.bean.User;
 import com.riter.atcrowdfunding.exception.LoginFailException;
 import com.riter.atcrowdfunding.manager.dao.UserMapper;
 import com.riter.atcrowdfunding.manager.service.UserService;
+import com.riter.atcrowdfunding.utils.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -24,5 +26,15 @@ public class UserServiceImpl implements UserService {
         }
 
         return user;
+    }
+
+    public Page queryPage(Integer pageno, Integer pagesize) {
+        Page page = new Page(pageno, pagesize);
+        Integer startIndex = page.getStartIndex();
+        List<User> datas = userMapper.queryList(startIndex, pagesize);
+        Integer totalsize = userMapper.count();
+        page.setDatas(datas);
+        page.setTotalsize(totalsize);
+        return page;
     }
 }

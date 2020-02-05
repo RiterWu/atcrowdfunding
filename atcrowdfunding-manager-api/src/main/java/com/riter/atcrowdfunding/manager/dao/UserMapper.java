@@ -31,4 +31,8 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     User login(Map<String, Object> paramMap);
+
+    List<User> queryList(@Param("startIndex") Integer startIndex,@Param("pagesize") Integer pagesize);
+
+    Integer count();
 }

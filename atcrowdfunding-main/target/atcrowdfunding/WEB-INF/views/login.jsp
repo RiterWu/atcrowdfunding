@@ -83,7 +83,6 @@
             });
             return false;
         }
-        var loadingIndex = -1;
 
         $.ajax({
             type: "POST",
@@ -94,11 +93,7 @@
                 "userpswd": fuserpswd.val(),
                 "type": ftype.val()
             },
-            beforeCheck: function(){
-                loadingIndex = layer.msg('处理中', {icon: 16});
-            },
             success: function (result) {
-                layer.close(loadingIndex);
                 if (result.status){
                     // 跳转主页面
                     window.location.href = "${APP_PATH}/main.htm";
