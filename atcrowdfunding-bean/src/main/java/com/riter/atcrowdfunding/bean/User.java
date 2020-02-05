@@ -60,4 +60,5 @@ public class User {
     public void setCreatetime(String createtime) {
         this.createtime = createtime == null ? null : createtime.trim();
     }
+
 }

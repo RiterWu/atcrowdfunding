@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -142,10 +143,10 @@
                         <div class="form-group has-feedback">
                             <div class="input-group">
                                 <div class="input-group-addon">查询条件</div>
-                                <input class="form-control has-success" type="text" placeholder="请输入查询条件">
+                                <input id="queryText" class="form-control has-success" type="text" placeholder="请输入查询条件">
                             </div>
                         </div>
-                        <button type="button" class="btn btn-warning"><i class="glyphicon glyphicon-search"></i> 查询</button>
+                        <button id="queryBtn" type="button" class="btn btn-warning"><i class="glyphicon glyphicon-search"></i> 查询</button>
                     </form>
                     <button type="button" class="btn btn-danger" style="float:right;margin-left:10px;"><i class=" glyphicon glyphicon-remove"></i> 删除</button>
                     <button type="button" class="btn btn-primary" style="float:right;" onclick="window.location.href='add.html'"><i class="glyphicon glyphicon-plus"></i> 新增</button>
@@ -164,32 +165,13 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${page.datas}" var="user" varStatus="status">
-                                <tr>
-                                    <td>${status.count}</td>
-                                    <td><input type="checkbox"></td>
-                                    <td>${user.loginacct}</td>
-                                    <td>${user.username}</td>
-                                    <td>${user.email}</td>
-                                    <td>
-                                        <button type="button" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></button>
-                                        <button type="button" class="btn btn-primary btn-xs"><i class=" glyphicon glyphicon-pencil"></i></button>
-                                        <button type="button" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></button>
-                                    </td>
-                                </tr>
-                            </c:forEach>
+
                             </tbody>
                             <tfoot>
                             <tr >
                                 <td colspan="6" align="center">
                                     <ul class="pagination">
-                                        <li class="disabled"><a href="#">上一页</a></li>
-                                        <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a href="#">4</a></li>
-                                        <li><a href="#">5</a></li>
-                                        <li><a href="#">下一页</a></li>
+
                                     </ul>
                                 </td>
                             </tr>
@@ -204,6 +186,7 @@
 </div>
 
 <script src="${APP_PATH}/jquery/jquery-2.1.1.min.js"></script>
+<script src="${APP_PATH }/jquery/layer/layer.js"></script>
 <script src="${APP_PATH}/bootstrap/js/bootstrap.min.js"></script>
 <script src="${APP_PATH}/script/docs.min.js"></script>
 <script type="text/javascript">
@@ -218,12 +201,95 @@
                 }
             }
         });
+
+        queryPage(1);
     });
     $("tbody .btn-success").click(function(){
         window.location.href = "assignRole.html";
     });
     $("tbody .btn-primary").click(function(){
         window.location.href = "edit.html";
+    });
+    
+    var jsonObj = {
+        "pageno": 1,
+        "pagesize": 10
+    };
+
+    function queryPage(pageno) {
+        jsonObj.pageno = pageno;
+
+        $.ajax({
+            type: "POST",
+            data: jsonObj,
+            url: "${APP_PATH}/user/index.do",
+            success: function (result) {
+                if (result.status) {
+                    var page = result.objects;
+                    var data = page.datas;
+
+                    var content = '';
+
+                    $.each(data, function (i, n) {
+                        content += '<tr>																												';
+                        content += '	<td>' + (i + 1) + '</td>                                                                                        ';
+                        content += '	<td><input type="checkbox"></td>                                                                                ';
+                        content += '	<td>' + n.loginacct + '</td>                                                                                      ';
+                        content += '	<td>' + n.username + '</td>                                                                                       ';
+                        content += '	<td>' + n.email + '</td>                                                                                          ';
+                        content += '	<td>                                                                                                            ';
+                        content += '		<button type="button" class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-check"></i></button>	';
+                        content += '		<button type="button" class="btn btn-primary btn-xs"><i class=" glyphicon glyphicon-pencil"></i></button>	';
+                        content += '		<button type="button" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></button>    ';
+                        content += '	</td>                                                                                                           ';
+                        content += '</tr																												';
+                    });
+
+                    $("tbody").html(content);
+
+                    var contentBar = '';
+
+                    if (page.pageno == 1) {
+                        contentBar += '<li class="disabled"><a href="#">上一页</a></li>';
+                    } else {
+                        contentBar += '<li><a href="#" onclick="pageChange(' + (page.pageno - 1) + ')">上一页</a></li>';
+                    }
+
+                    for (var i = 1; i <= page.totalno; i++) {
+                        contentBar += '<li ';
+                        if (page.pageno == i) {
+                            contentBar += 'class="active"';
+                        }
+                        contentBar += '><a href="#" onclick="pageChange(' + i + ')">' + i + '</a></li>';
+                    }
+
+                    if (page.pageno == page.totalno) {
+                        contentBar += '<li class="disabled"><a href="#">下一页</a></li>';
+                    } else {
+                        contentBar += '<li><a href="#" onclick="pageChange(' + (page.pageno + 1) + ')">下一页</a></li>';
+                    }
+
+                    $(".pagination").html(contentBar);
+
+                } else {
+                    layer.msg(result.message,{time:1000,icon:5,shift:6});
+                }
+            },
+            error: function () {
+                layer.msg("加载数据失败！",{time:1000,icon:5,shift:6});
+            }
+        });
+    }
+
+    function pageChange(pageno) {
+        // window.location.href = "${APP_PATH}/user/index.do?pageno="+pageno;
+        queryPage(pageno);
+    }
+
+    $("#queryBtn").click(function () {
+        var queryText = $("#queryText").val();
+        jsonObj.queryText = queryText;
+        queryPage(1);
     });
 </script>
 </body>

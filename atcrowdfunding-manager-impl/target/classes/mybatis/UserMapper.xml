@@ -233,7 +233,7 @@
     where loginacct = #{loginacct} and userpswd = #{userpswd}
   </select>
 
-  <select id="queryList" resultMap="BaseResultMap">
+<!--  <select id="queryList" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List"/>
     from t_user
@@ -243,6 +243,28 @@
   <select id="count" resultType="Integer">
     select  count(*)
     from t_user
+  </select>-->
+
+  <select id="queryList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_user
+    <where>
+      <if test="queryText!=null">
+        loginacct like concat("%",#{queryText},"%")
+      </if>
+    </where>
+    limit #{startIndex},#{pagesize}
+  </select>
+
+  <select id="count" resultType="Integer">
+    select  count(*)
+    from t_user
+    <where>
+      <if test="queryText!=null">
+        loginacct like concat("%",#{queryText},"%")
+      </if>
+    </where>
   </select>
 
 </mapper>

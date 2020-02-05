@@ -28,7 +28,20 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    public Page queryPage(Integer pageno, Integer pagesize) {
+    public Page queryPage(Map<String, Object> paraMap) {
+        Page page = new Page((Integer)paraMap.get("pageno"), (Integer)paraMap.get("pagesize"));
+
+        Integer startIndex = page.getStartIndex();
+        paraMap.put("startIndex", startIndex);
+
+        List<User> datas = userMapper.queryList(paraMap);
+        Integer totalsize = userMapper.count(paraMap);
+        page.setDatas(datas);
+        page.setTotalsize(totalsize);
+        return page;
+    }
+
+    /*public Page queryPage(Integer pageno, Integer pagesize) {
         Page page = new Page(pageno, pagesize);
         Integer startIndex = page.getStartIndex();
         List<User> datas = userMapper.queryList(startIndex, pagesize);
@@ -36,5 +49,12 @@ public class UserServiceImpl implements UserService {
         page.setDatas(datas);
         page.setTotalsize(totalsize);
         return page;
+    }*/
+
+    public Integer save(User user) {
+        return userMapper.insert(user);
     }
+
+
+
 }
