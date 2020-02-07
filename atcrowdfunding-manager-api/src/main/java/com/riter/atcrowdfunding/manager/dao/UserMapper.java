@@ -1,10 +1,12 @@
 package com.riter.atcrowdfunding.manager.dao;
 
+import com.riter.atcrowdfunding.bean.Role;
 import com.riter.atcrowdfunding.bean.User;
 import com.riter.atcrowdfunding.bean.UserExample;
 import java.util.List;
 import java.util.Map;
 
+import com.riter.atcrowdfunding.vo.Data;
 import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
@@ -39,4 +41,12 @@ public interface UserMapper {
     List<User> queryList(Map<String, Object> paraMap);
 
     Integer count(Map<String, Object> paraMap);
+
+    List<Role> queryAllRole();
+
+    List<Integer> queryRoleByUserId(Integer id);
+
+    int saveUserRoleRelationship(@Param("userid") Integer userid, @Param("data") Data data);
+
+    int deleteUserRoleRelationship(@Param("userid")  Integer userid, @Param("data") Data data);
 }

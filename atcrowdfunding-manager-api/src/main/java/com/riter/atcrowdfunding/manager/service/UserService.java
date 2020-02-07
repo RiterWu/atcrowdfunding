@@ -1,8 +1,11 @@
 package com.riter.atcrowdfunding.manager.service;
 
+import com.riter.atcrowdfunding.bean.Role;
 import com.riter.atcrowdfunding.bean.User;
 import com.riter.atcrowdfunding.utils.Page;
+import com.riter.atcrowdfunding.vo.Data;
 
+import java.util.List;
 import java.util.Map;
 
 public interface UserService {
@@ -14,4 +17,20 @@ public interface UserService {
     Integer save(User user);
 
     Page queryPage(Map<String,Object> paraMap);
+
+    User getUserById(Integer id);
+
+    int updateUser(User user);
+
+    int deleteById(Integer id);
+
+    int deleteBatchByIds(Integer[] ids);
+
+    List<Role> queryAllRole();
+
+    List<Integer> queryRoleByUserId(Integer id);
+
+    int saveUserRoleRelationship(Integer userid, Data data);
+
+    int deleteUserRoleRelationship(Integer userid, Data data);
 }
