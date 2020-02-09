@@ -3,6 +3,8 @@ package com.riter.atcrowdfunding.manager.dao;
 import com.riter.atcrowdfunding.bean.Role;
 import com.riter.atcrowdfunding.bean.RoleExample;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface RoleMapper {
@@ -27,4 +29,8 @@ public interface RoleMapper {
     int updateByPrimaryKeySelective(Role record);
 
     int updateByPrimaryKey(Role record);
+
+    List<Role> queryList(Map map);
+
+    Integer count(Map map);
 }

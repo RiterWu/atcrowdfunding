@@ -38,7 +38,7 @@
         </javaClientGenerator>
 
         <!--<table tableName="t_account_type_cert" domainObjectName="AccountTypeCert" />-->
-        <table tableName="t_advertisement" domainObjectName="Advertisement"/>
+        <!--<table tableName="t_advertisement" domainObjectName="Advertisement"/>
         <table tableName="t_cert" domainObjectName="Cert"/>
         <table tableName="t_dictionary" domainObjectName="Dictionary"/>
         <table tableName="t_member" domainObjectName="Member"/>
@@ -58,7 +58,9 @@
         <table tableName="t_tag" domainObjectName="Tag"/>
         <table tableName="t_type" domainObjectName="Type"/>
         <table tableName="t_user" domainObjectName="User"/>
-        <table tableName="t_user_role" domainObjectName="UserRole"/>
+        <table tableName="t_user_role" domainObjectName="UserRole"/>-->
+
+        <table tableName="t_permission" domainObjectName="Permission"/>
 
 
     </context>

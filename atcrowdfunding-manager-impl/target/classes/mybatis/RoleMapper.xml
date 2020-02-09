@@ -161,4 +161,27 @@
     set name = #{name,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="queryList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_role
+    <where>
+      <if test="queryText!=null">
+        loginacct like concat("%",#{queryText},"%")
+      </if>
+    </where>
+    limit #{startIndex},#{pagesize}
+  </select>
+
+  <select id="count" resultType="Integer">
+    select count(*)
+    from t_role
+    <where>
+      <if test="queryText!=null">
+        loginacct like concat("%",#{queryText},"%")
+      </if>
+    </where>
+  </select>
+
 </mapper>

@@ -1,5 +1,8 @@
 package com.riter.atcrowdfunding.bean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Permission {
     private Integer id;
 
@@ -10,6 +13,14 @@ public class Permission {
     private String icon;
 
     private String url;
+
+    private Boolean open;
+
+    private Boolean checked;
+
+    private Integer level;
+
+    private List<Permission> children = new ArrayList<Permission>();
 
     public Integer getId() {
         return id;
@@ -49,5 +60,37 @@ public class Permission {
 
     public void setUrl(String url) {
         this.url = url == null ? null : url.trim();
+    }
+
+    public Boolean getOpen() {
+        return open;
+    }
+
+    public void setOpen(Boolean open) {
+        this.open = open;
+    }
+
+    public List<Permission> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<Permission> children) {
+        this.children = children;
+    }
+
+    public Boolean getChecked() {
+        return checked;
+    }
+
+    public void setChecked(Boolean checked) {
+        this.checked = checked;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
     }
 }
