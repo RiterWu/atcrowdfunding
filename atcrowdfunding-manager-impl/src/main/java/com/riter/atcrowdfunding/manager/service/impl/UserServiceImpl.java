@@ -1,5 +1,6 @@
 package com.riter.atcrowdfunding.manager.service.impl;
 
+import com.riter.atcrowdfunding.bean.Permission;
 import com.riter.atcrowdfunding.bean.Role;
 import com.riter.atcrowdfunding.bean.User;
 import com.riter.atcrowdfunding.exception.LoginFailException;
@@ -86,6 +87,10 @@ public class UserServiceImpl implements UserService {
 
     public int deleteUserRoleRelationship(Integer userid, Data data) {
         return userMapper.deleteUserRoleRelationship(userid,data);
+    }
+
+    public List<Permission> getPermissionByUserId(Integer id) {
+        return userMapper.getPermissionByUserId(id);
     }
 
     /*public Page queryPage(Integer pageno, Integer pagesize) {

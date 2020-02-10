@@ -1,5 +1,6 @@
 package com.riter.atcrowdfunding.controller;
 
+import com.riter.atcrowdfunding.bean.Permission;
 import com.riter.atcrowdfunding.bean.User;
 import com.riter.atcrowdfunding.manager.service.UserService;
 import com.riter.atcrowdfunding.utils.AjaxResult;
@@ -12,8 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import sun.security.provider.MD5;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class DispatherController {
@@ -32,7 +32,7 @@ public class DispatherController {
     }
 
     @RequestMapping("/main")
-    public String main(){
+    public String main(HttpSession session) {
         return "main";
     }
 
@@ -57,6 +57,39 @@ public class DispatherController {
             paramMap.put("type", type);
 
             User user = userService.login(paramMap);
+
+            // ------------------------------------------------------------
+            //User user = (User) session.getAttribute(Constant.LOGIN_USER);
+
+            // 当前用户所拥有的许可权限
+            List<Permission> myPermissionList = userService.getPermissionByUserId(user.getId());
+
+            Permission permissionRoot = null;
+
+            Map<Integer, Permission> map = new HashMap<Integer, Permission>();
+
+            Set<String> myUris = new HashSet<String>(); // 用于拦截器拦截许可权限
+
+            for (Permission permission : myPermissionList) {
+                map.put(permission.getId(), permission);
+
+                myUris.add("/"+permission.getUrl());
+            }
+
+            session.setAttribute(Constant.MY_URIS, myUris);
+
+            for (Permission permission : myPermissionList) {
+                if (permission.getPid() == null) {
+                    permissionRoot = permission;
+                } else {
+                    Permission parent = map.get(permission.getPid());
+                    parent.getChildren().add(permission);
+                }
+            }
+
+            session.setAttribute("permissionRoot", permissionRoot);
+            // -------------------------------------------------------
+
 
             session.setAttribute(Constant.LOGIN_USER, user);
             result.setStatus(true);

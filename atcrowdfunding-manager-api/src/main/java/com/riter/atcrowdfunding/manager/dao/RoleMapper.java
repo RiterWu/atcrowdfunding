@@ -5,6 +5,7 @@ import com.riter.atcrowdfunding.bean.RoleExample;
 import java.util.List;
 import java.util.Map;
 
+import com.riter.atcrowdfunding.bean.RolePermission;
 import org.apache.ibatis.annotations.Param;
 
 public interface RoleMapper {
@@ -33,4 +34,8 @@ public interface RoleMapper {
     List<Role> queryList(Map map);
 
     Integer count(Map map);
+
+    void deleteRolePermissionRelationship(Integer roleid);
+
+    int insertRolePermission(RolePermission rp);
 }

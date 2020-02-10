@@ -229,4 +229,11 @@
     from t_permission
   </select>
 
+  <select id="getPermissionIdByRoleid" parameterType="int" resultType="int">
+    select permissionid
+    from t_role_permission
+    where roleid = #{roleid}
+  </select>
+
+
 </mapper>

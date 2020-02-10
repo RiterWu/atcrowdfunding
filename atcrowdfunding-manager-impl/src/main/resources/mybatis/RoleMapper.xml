@@ -184,4 +184,13 @@
     </where>
   </select>
 
+
+  <delete id="deleteRolePermissionRelationship" parameterType="int">
+    delete from t_role_permission where roleid = #{roleid}
+  </delete>
+
+  <insert id="insertRolePermission" parameterType="RolePermission">
+    insert into t_role_permission(roleid,permissionid) values(#{roleid},#{permissionid})
+  </insert>
+
 </mapper>

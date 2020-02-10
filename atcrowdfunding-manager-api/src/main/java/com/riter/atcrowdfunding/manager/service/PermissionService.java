@@ -19,4 +19,6 @@ public interface PermissionService {
     int updatePermission(Permission permission);
 
     int deletePermission(Integer id);
+
+    List<Integer> getPermissionIdByRoleid(Integer roleid);
 }

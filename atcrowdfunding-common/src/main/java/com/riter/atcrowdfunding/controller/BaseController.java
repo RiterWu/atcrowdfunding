@@ -37,4 +37,5 @@ public class BaseController {
         Map<String, Object> resultMap = datas.get();
         resultMap.put("message", message);
     }
+
 }

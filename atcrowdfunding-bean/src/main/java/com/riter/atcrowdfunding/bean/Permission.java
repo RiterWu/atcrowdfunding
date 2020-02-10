@@ -14,7 +14,7 @@ public class Permission {
 
     private String url;
 
-    private Boolean open;
+    private Boolean open = true;
 
     private Boolean checked;
 

@@ -58,7 +58,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading"><i class="glyphicon glyphicon-th-list"></i> 权限分配列表<div style="float:right;cursor:pointer;" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-question-sign"></i></div></div>
                 <div class="panel-body">
-                    <button class="btn btn-success">分配许可</button>
+                    <button id="assignPermissionBtn" class="btn btn-success">分配许可</button>
                     <br><br>
                     <ul id="treeDemo" class="ztree"></ul>
                 </div>
@@ -93,6 +93,7 @@
     </div>
 </div>
 <script src="${APP_PATH}/jquery/jquery-2.1.1.min.js"></script>
+<script src="${APP_PATH }/jquery/layer/layer.js"></script>
 <script src="${APP_PATH}/bootstrap/js/bootstrap.min.js"></script>
 <script src="${APP_PATH}/script/docs.min.js"></script>
 <script src="${APP_PATH}/ztree/jquery.ztree.all-3.5.min.js"></script>
@@ -118,13 +119,13 @@
                 addDiyDom: function(treeId, treeNode){
                     var icoObj = $("#" + treeNode.tId + "_ico"); // tId = permissionTree_1, $("#permissionTree_1_ico")
                     if ( treeNode.icon ) {
-                        icoObj.removeClass("button ico_docu ico_open").addClass("fa fa-fw " + treeNode.icon).css("background","");
+                        icoObj.removeClass("button ico_docu ico_open").addClass(treeNode.icon).css("background","");
                     }
                 },
             },
             async: {
                 enable: true,
-                url:"tree.txt",
+                url:"${APP_PATH}/role/loadDataAsync.do?roleid=${param.roleid}",
                 autoParam:["id", "name=n", "level=lv"]
             },
             callback: {
@@ -133,10 +134,51 @@
                 }
             }
         };
-        //$.fn.zTree.init($("#treeDemo"), setting); //异步访问数据
+        $.fn.zTree.init($("#treeDemo"), setting); //异步访问数据
 
-        var d = [{"id":1,"pid":0,"seqno":0,"name":"系统权限菜单","url":null,"icon":"fa fa-sitemap","open":true,"checked":false,"children":[{"id":2,"pid":1,"seqno":0,"name":"控制面板","url":"dashboard.htm","icon":"fa fa-desktop","open":true,"checked":false,"children":[]},{"id":6,"pid":1,"seqno":1,"name":"消息管理","url":"message/index.htm","icon":"fa fa-weixin","open":true,"checked":false,"children":[]},{"id":7,"pid":1,"seqno":1,"name":"权限管理","url":"","icon":"fa fa-cogs","open":true,"checked":false,"children":[{"id":8,"pid":7,"seqno":1,"name":"用户管理","url":"user/index.htm","icon":"fa fa-user","open":true,"checked":false,"children":[]},{"id":9,"pid":7,"seqno":1,"name":"角色管理","url":"role/index.htm","icon":"fa fa-graduation-cap","open":true,"checked":false,"children":[]},{"id":10,"pid":7,"seqno":1,"name":"许可管理","url":"permission/index.htm","icon":"fa fa-check-square-o","open":true,"checked":false,"children":[]}]},{"id":11,"pid":1,"seqno":1,"name":"资质管理","url":"","icon":"fa fa-certificate","open":true,"checked":false,"children":[{"id":12,"pid":11,"seqno":1,"name":"分类管理","url":"cert/type.htm","icon":"fa fa-th-list","open":true,"checked":false,"children":[]},{"id":13,"pid":11,"seqno":1,"name":"资质管理","url":"cert/index.htm","icon":"fa fa-certificate","open":true,"checked":false,"children":[]}]},{"id":15,"pid":1,"seqno":1,"name":"流程管理","url":"process/index.htm","icon":"fa fa-random","open":true,"checked":false,"children":[]},{"id":16,"pid":1,"seqno":1,"name":"审核管理","url":"","icon":"fa fa-check-square","open":true,"checked":false,"children":[{"id":17,"pid":16,"seqno":1,"name":"实名认证人工审核","url":"process/cert.htm","icon":"fa fa-check-circle-o","open":true,"checked":false,"children":[]}]}]}];
-        $.fn.zTree.init($("#treeDemo"), setting, d);
+        //var d = [{"id":1,"pid":0,"seqno":0,"name":"系统权限菜单","url":null,"icon":"fa fa-sitemap","open":true,"checked":false,"children":[{"id":2,"pid":1,"seqno":0,"name":"控制面板","url":"dashboard.htm","icon":"fa fa-desktop","open":true,"checked":false,"children":[]},{"id":6,"pid":1,"seqno":1,"name":"消息管理","url":"message/index.htm","icon":"fa fa-weixin","open":true,"checked":false,"children":[]},{"id":7,"pid":1,"seqno":1,"name":"权限管理","url":"","icon":"fa fa-cogs","open":true,"checked":false,"children":[{"id":8,"pid":7,"seqno":1,"name":"用户管理","url":"user/index.htm","icon":"fa fa-user","open":true,"checked":false,"children":[]},{"id":9,"pid":7,"seqno":1,"name":"角色管理","url":"role/index.htm","icon":"fa fa-graduation-cap","open":true,"checked":false,"children":[]},{"id":10,"pid":7,"seqno":1,"name":"许可管理","url":"permission/index.htm","icon":"fa fa-check-square-o","open":true,"checked":false,"children":[]}]},{"id":11,"pid":1,"seqno":1,"name":"资质管理","url":"","icon":"fa fa-certificate","open":true,"checked":false,"children":[{"id":12,"pid":11,"seqno":1,"name":"分类管理","url":"cert/type.htm","icon":"fa fa-th-list","open":true,"checked":false,"children":[]},{"id":13,"pid":11,"seqno":1,"name":"资质管理","url":"cert/index.htm","icon":"fa fa-certificate","open":true,"checked":false,"children":[]}]},{"id":15,"pid":1,"seqno":1,"name":"流程管理","url":"process/index.htm","icon":"fa fa-random","open":true,"checked":false,"children":[]},{"id":16,"pid":1,"seqno":1,"name":"审核管理","url":"","icon":"fa fa-check-square","open":true,"checked":false,"children":[{"id":17,"pid":16,"seqno":1,"name":"实名认证人工审核","url":"process/cert.htm","icon":"fa fa-check-circle-o","open":true,"checked":false,"children":[]}]}]}];
+        //$.fn.zTree.init($("#treeDemo"), setting, d);
+    });
+
+    $("#assignPermissionBtn").click(function () {
+        var jsonObj = {
+            "roleid": "${param.roleid}"
+        };
+
+        var treeObj = $.fn.zTree.getZTreeObj("treeDemo");
+
+        var checkedNodes = treeObj.getCheckedNodes(true);
+
+        $.each(checkedNodes,function (i,n) {
+            jsonObj["ids["+i+"]"] = n.id;
+        });
+
+        if(checkedNodes.length == 0) {
+            layer.msg("请选择分配许可，至少分配一个许可！",{time:1000,icon:5,shift:6});
+        }else {
+            var loadingIndex = -1;
+            $.ajax({
+                type: "POST",
+                data: jsonObj,
+                url: "${APP_PATH}/role/assignPermission.do",
+                beforeSend: function(){
+                    loadingIndex = layer.msg("正在分配许可...",{icon: 16});
+                    return true;
+                },
+                success: function (result) {
+                    layer.close(loadingIndex);
+                    if(result.status){
+                        layer.msg("分配成功！",{time:1000,icon:6});
+                    }else {
+                        layer.msg(result.message,{time:1000,icon:5,shift:6});
+                    }
+                },
+                error: function () {
+                    layer.msg("操作失败！",{time:1000,icon:5,shift:6});
+                }
+            });
+        }
+
     });
 </script>
 </body>

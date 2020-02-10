@@ -33,4 +33,6 @@ public interface PermissionMapper {
     List<Permission> getChildrenPermissionByPid(Integer id);
 
     List<Permission> getAllPermission();
+
+    List<Integer> getPermissionIdByRoleid(Integer roleid);
 }

@@ -107,12 +107,10 @@ public class PermissionController {
 
             for (Permission permission : permissionList) {
                 if (permission.getPid() == null) {
-                    permission.setOpen(true);
                     root.add(permission);
                 } else {
                     Permission parent = map.get(permission.getPid());
                     parent.getChildren().add(permission);
-                    parent.setOpen(true);
                 }
             }
 

@@ -86,19 +86,6 @@
 
                             </tbody>
                             <tfoot>
-                            <tr >
-                                <td colspan="6" align="center">
-                                    <ul class="pagination">
-                                        <li class="disabled"><a href="#">上一页</a></li>
-                                        <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a href="#">4</a></li>
-                                        <li><a href="#">5</a></li>
-                                        <li><a href="#">下一页</a></li>
-                                    </ul>
-                                </td>
-                            </tr>
 
                             </tfoot>
                         </table>
@@ -158,7 +145,7 @@
                         content += '<td><input type="checkbox"></td>                                                                             ';
                         content += '    <td>'+n.name+'</td>                                                                                    ';
                         content += '    <td>                                                                                                     ';
-                        content += '    <button type="button" class="btn btn-success btn-xs" onclick="window.location.href=\'${APP_PATH}/role/assignPermission.htm?id='+n.id+'\' " ><i class=" glyphicon glyphicon-check"></i></button> ';
+                        content += '    <button type="button" class="btn btn-success btn-xs" onclick="window.location.href=\'${APP_PATH}/role/toAssignPermission.htm?roleid='+n.id+'\' " ><i class=" glyphicon glyphicon-check"></i></button> ';
                         content += '<button type="button" class="btn btn-primary btn-xs"><i class=" glyphicon glyphicon-pencil"></i></button>    ';
                         content += '<button type="button" class="btn btn-danger btn-xs"><i class=" glyphicon glyphicon-remove"></i></button>     ';
                         content += '</td>                                                                                                        ';

@@ -1,5 +1,6 @@
 package com.riter.atcrowdfunding.manager.service;
 
+import com.riter.atcrowdfunding.bean.Permission;
 import com.riter.atcrowdfunding.bean.Role;
 import com.riter.atcrowdfunding.bean.User;
 import com.riter.atcrowdfunding.utils.Page;
@@ -33,4 +34,6 @@ public interface UserService {
     int saveUserRoleRelationship(Integer userid, Data data);
 
     int deleteUserRoleRelationship(Integer userid, Data data);
+
+    List<Permission> getPermissionByUserId(Integer id);
 }

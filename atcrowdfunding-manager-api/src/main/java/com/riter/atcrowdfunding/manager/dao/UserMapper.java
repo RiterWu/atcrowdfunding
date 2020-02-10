@@ -1,5 +1,6 @@
 package com.riter.atcrowdfunding.manager.dao;
 
+import com.riter.atcrowdfunding.bean.Permission;
 import com.riter.atcrowdfunding.bean.Role;
 import com.riter.atcrowdfunding.bean.User;
 import com.riter.atcrowdfunding.bean.UserExample;
@@ -49,4 +50,6 @@ public interface UserMapper {
     int saveUserRoleRelationship(@Param("userid") Integer userid, @Param("data") Data data);
 
     int deleteUserRoleRelationship(@Param("userid")  Integer userid, @Param("data") Data data);
+
+    List<Permission> getPermissionByUserId(Integer id);
 }

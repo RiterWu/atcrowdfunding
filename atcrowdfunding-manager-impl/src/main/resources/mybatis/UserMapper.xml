@@ -289,4 +289,16 @@
     </foreach>
   </delete>
 
+  <select id="getPermissionByUserId" parameterType="int" resultType="Permission">
+    SELECT DISTINCT p.*
+    FROM t_permission AS p ,t_role_permission,t_role,t_user_role,t_user
+    WHERE
+    p.id = t_role_permission.permissionid
+    AND t_role_permission.roleid = t_role.id
+    AND t_role.id = t_user_role.roleid
+    AND t_user_role.userid = t_user.id
+    AND t_user.id = #{id}
+    ORDER BY p.id
+  </select>
+
 </mapper>
