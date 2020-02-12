@@ -90,7 +90,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public List<Permission> getPermissionByUserId(Integer id) {
-        return userMapper.getPermissionByUserId(id);
+    return userMapper.getPermissionByUserId(id);
     }
 
     /*public Page queryPage(Integer pageno, Integer pagesize) {

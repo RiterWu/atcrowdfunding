@@ -34,6 +34,19 @@
 	            <value>classpath*:mybatis/*Mapper.xml</value>
 	        </list>
 	    </property>
+		<!-- other configuration -->
+		<!--<property name="plugins">
+			<array>
+				<bean class="com.github.pagehelper.PageInterceptor">
+					<property name="properties">
+						&lt;!&ndash; config params as the following &ndash;&gt;
+						<value>
+							helperDialect=mysql
+						</value>
+					</property>
+				</bean>
+			</array>
+		</property>-->
 	</bean>
 	
 	<!-- 扫描Mapper映射配置 -->

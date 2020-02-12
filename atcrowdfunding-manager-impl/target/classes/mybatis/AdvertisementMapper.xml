@@ -223,4 +223,23 @@
       userid = #{userid,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="queryAll" resultType="Advertisement">
+    select
+    <include refid="Base_Column_List"/>
+    from t_advertisement
+  </select>
+
+  <select id="queryAdvertise"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_advertisement
+    limit #{startIndex},#{pagesize}
+  </select>
+
+  <select id="count" resultType="int">
+    select count(*)
+    from t_advertisement
+  </select>
+
 </mapper>

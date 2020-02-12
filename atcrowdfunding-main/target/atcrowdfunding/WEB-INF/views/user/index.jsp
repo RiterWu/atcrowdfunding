@@ -52,7 +52,7 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <div class="tree">
-                <jsp:include page="/WEB-INF/views/common/bar-left.jsp"/>
+                <jsp:include page="/WEB-INF/views/common/menu.jsp"/>
             </div>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -192,7 +192,7 @@
                     }
 
                     if (page.pageno == page.totalno) {
-                        contentBar += '<li class="disabled"><a href="#">下一页</a></li>';
+                    contentBar += '<li class="disabled"><a href="#">下一页</a></li>';
                     } else {
                         contentBar += '<li><a href="#" onclick="pageChange(' + (page.pageno + 1) + ')">下一页</a></li>';
                     }
