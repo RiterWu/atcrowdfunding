@@ -8,6 +8,7 @@ import com.riter.atcrowdfunding.manager.service.AdvertisementService;
 import com.riter.atcrowdfunding.utils.AlgorithmUtil;
 import com.riter.atcrowdfunding.utils.Constant;
 import com.riter.atcrowdfunding.utils.Page;
+import com.riter.atcrowdfunding.vo.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
@@ -48,6 +49,24 @@ public class AdvertisementController extends BaseController {
         map.put("advertisement", advertisement);
         return "advert/update";
     }
+
+    @ResponseBody
+    @RequestMapping("/deleteBatch")
+    public Object deleteBatch(Data data){
+        start();
+
+        try {
+            Integer count = advertisementService.deleteBatch(data);
+            success(count == data.getIds().size());
+        } catch (Exception e) {
+            success(false);
+            error("批量删除失败！");
+            e.printStackTrace();
+        }
+
+        return end();
+    }
+
 
     @ResponseBody
     @RequestMapping("/delete")
@@ -131,7 +150,7 @@ public class AdvertisementController extends BaseController {
     @ResponseBody
     @RequestMapping("/index")
     public Object index(@RequestParam(value = "pageno",defaultValue = "1") Integer pageno,
-                        @RequestParam(value = "pagesize",defaultValue = "2") Integer pagesize){
+                        @RequestParam(value = "pagesize",defaultValue = "3") Integer pagesize){
         start();
         Map<String,Object> map = new HashMap<String, Object>();
         map.put("pageNo",pageno);

@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.riter.atcrowdfunding.bean.Advertisement;
 import com.riter.atcrowdfunding.manager.dao.AdvertisementMapper;
 import com.riter.atcrowdfunding.manager.service.AdvertisementService;
+import com.riter.atcrowdfunding.vo.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +45,15 @@ public class AdvertisementServiceImpl implements AdvertisementService {
 
     public int deleteById(Integer id) {
         return advertisementMapper.deleteByPrimaryKey(id);
+    }
+
+    public Integer deleteBatch(Data data) {
+        int totalCount = 0;
+        for (Integer id : data.getIds()) {
+            int count = advertisementMapper.deleteByPrimaryKey(id);
+            totalCount += count;
+        }
+        return totalCount;
     }
 
 }

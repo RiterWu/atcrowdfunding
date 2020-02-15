@@ -69,7 +69,7 @@
                         </div>
                         <button type="button" class="btn btn-warning"><i class="glyphicon glyphicon-search"></i> 查询</button>
                     </form>
-                    <button type="button" class="btn btn-danger" style="float:right;margin-left:10px;"><i class=" glyphicon glyphicon-remove"></i> 删除</button>
+                    <button type="button" class="btn btn-danger" style="float:right;margin-left:10px;" onclick="deleteBatchBtn()"><i class=" glyphicon glyphicon-remove"></i> 删除</button>
                     <button type="button" class="btn btn-primary" style="float:right;" onclick="window.location.href='${APP_PATH}/advert/toAdd.htm'"><i class="glyphicon glyphicon-plus"></i> 新增</button>
                     <br>
                     <hr style="clear:both;">
@@ -78,6 +78,7 @@
                             <thead>
                             <tr >
                                 <th width="30">#</th>
+                                <th width="30"><input id="allCheckbox" type="checkbox"></th>
                                 <th>广告描述</th>
                                 <th>状态</th>
                                 <th width="100">操作</th>
@@ -124,7 +125,7 @@
 
     var jsonObj = {
         "pageNo": 1,
-        "pageSize": 2
+        "pageSize": 4
     };
 
     function queryPage(pageNo) {
@@ -149,6 +150,7 @@
                     $.each(page.list,function (i,n) {
                         content += '<tr>																											';
                         content += '    <td>'+(i+1)+'</td>																									';
+                        content += '	<td><input type="checkbox" id="'+n.id+'"></td>                                                                                ';
                         content += '    <td>'+n.name+'</td>																				';
 
                         if (n.status == "0"){
@@ -237,6 +239,51 @@
 
         });
 
+    }
+
+    $("#allCheckbox").click(function () {
+        var checkedStatus = this.checked;
+        $("tbody tr td input[type='checkbox']").prop("checked",checkedStatus);
+    });
+
+    function deleteBatchBtn() {
+        var selectCheckbox = $("tbody tr td input:checked");
+
+        if (selectCheckbox.length == 0){
+            layer.msg("至少选择一个广告进行删除！请选择！", {time: 1000, icon: 5, shift: 6});
+            return false;
+        }
+
+        var jsonObj = {};
+
+        $.each(selectCheckbox, function (i, n) {
+            jsonObj["ids["+i+"]"] = n.id;
+        });
+
+        layer.confirm("确认要删除这些广告吗?", {icon: 3, title: '提示'}, function (cindex) {
+            layer.close(cindex);
+            $.ajax({
+                type: "POST",
+                url: "${APP_PATH}/advert/deleteBatch.do",
+                data: jsonObj,
+                beforeSend: function () {
+                    return true;
+                },
+                success: function (result) {
+                    if (result.status) {
+                        // 跳转主页面
+                        window.location.href = "${APP_PATH}/advert/toIndex.htm";
+                    } else {
+                        layer.msg(result.message, {time: 1000, icon: 5, shift: 6});
+                    }
+                },
+                error: function () {
+                    layer.msg("删除失败！", {time: 1000, icon: 5, shift: 6});
+                }
+            });
+        }, function (cindex) {
+            layer.close(cindex);
+        });
     }
 
 </script>
