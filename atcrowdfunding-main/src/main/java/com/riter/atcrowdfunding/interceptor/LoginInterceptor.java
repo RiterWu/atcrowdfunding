@@ -1,5 +1,6 @@
 package com.riter.atcrowdfunding.interceptor;
 
+import com.riter.atcrowdfunding.bean.Member;
 import com.riter.atcrowdfunding.bean.User;
 import com.riter.atcrowdfunding.utils.Constant;
 import javafx.scene.effect.SepiaTone;
@@ -33,7 +34,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
         // 2.判断用户是否登录，如果登录就放行
         User user = (User) request.getSession().getAttribute(Constant.LOGIN_USER);
-        if (user != null) {
+        Member member = (Member) request.getSession().getAttribute(Constant.LOGIN_MEMBER);
+        if (user != null || member != null) {
             return true;
         } else {
             response.sendRedirect(request.getContextPath() + "/login.htm");

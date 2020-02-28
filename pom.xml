@@ -223,6 +223,14 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+
+            <!-- java连接redis -->
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>3.0.0</version>
+            </dependency>
+
         </dependencies>
 
     </dependencyManagement>

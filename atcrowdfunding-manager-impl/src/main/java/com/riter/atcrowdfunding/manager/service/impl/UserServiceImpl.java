@@ -7,15 +7,15 @@ import com.riter.atcrowdfunding.exception.LoginFailException;
 import com.riter.atcrowdfunding.manager.dao.RoleMapper;
 import com.riter.atcrowdfunding.manager.dao.UserMapper;
 import com.riter.atcrowdfunding.manager.service.UserService;
-import com.riter.atcrowdfunding.utils.Constant;
-import com.riter.atcrowdfunding.utils.MD5Util;
-import com.riter.atcrowdfunding.utils.Page;
+import com.riter.atcrowdfunding.utils.*;
 import com.riter.atcrowdfunding.vo.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import redis.clients.jedis.Jedis;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,8 +26,7 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     public User login(Map<String, Object> paramMap) {
-
-         User user = userMapper.login(paramMap);
+        User user = user = userMapper.login(paramMap);
 
         if (user==null){
             throw new LoginFailException("用户名或密码不正确！");

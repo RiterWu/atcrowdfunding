@@ -58,10 +58,10 @@
     </bean>
 
     <!-- 声明拦截器对象    -->
-    <mvc:interceptors>
+    <!--<mvc:interceptors>
         <bean id="loginInterceptor" class="com.riter.atcrowdfunding.interceptor.LoginInterceptor"></bean>
         <bean id="authInterceptor" class="com.riter.atcrowdfunding.interceptor.AuthInterceptor"></bean>
-    </mvc:interceptors>
+    </mvc:interceptors>-->
 
 
 </beans>

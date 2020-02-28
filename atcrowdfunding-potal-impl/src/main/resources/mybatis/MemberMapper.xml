@@ -288,4 +288,11 @@
       accttype = #{accttype,jdbcType=CHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="MemberLogin" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_member
+    where loginacct = #{loginacct} and userpswd = #{userpswd}
+  </select>
 </mapper>

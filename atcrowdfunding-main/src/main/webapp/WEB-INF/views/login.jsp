@@ -46,13 +46,13 @@
         </div>
         <div class="form-group has-success has-feedback">
             <select class="form-control" id="ftype" name="type">
-                <option value="member">会员</option>
-                <option value="user" selected>管理</option>
+                <option value="member" selected>会员</option>
+                <option value="user" >管理</option>
             </select>
         </div>
         <div class="checkbox">
             <label>
-                <input type="checkbox" value="remember-me"> 记住我
+                <input id="remember" type="checkbox" value="remember-me"> 记住我
             </label>
             <br>
             <label>
@@ -74,6 +74,7 @@
          var floginacct = $("#floginacct");
          var fuserpswd = $("#fuserpswd");
          var ftype = $("#ftype");
+         var flag = $("#remember")[0].checked;
 
         if ($.trim(floginacct.val()) == "") {
             //alert("用户账户不能为空，请重新输入！");
@@ -91,12 +92,19 @@
             data: {
                 "loginacct": floginacct.val(),
                 "userpswd": fuserpswd.val(),
-                "type": ftype.val()
+                "type": ftype.val(),
+                "isRememberMe": flag
             },
             success: function (result) {
                 if (result.status){
-                    // 跳转主页面
-                    window.location.href = "${APP_PATH}/main.htm";
+                    if("member" == result.objects){
+                        window.location.href = "${APP_PATH}/member.htm";
+                    }else if ("user" == result.objects){
+                        // 跳转主页面
+                        window.location.href = "${APP_PATH}/main.htm";
+                    }else {
+                        layer.msg("不要乱来！",{time:1000,icon:5,shift:6});
+                    }
                 }else {
                     layer.msg(result.message,{time:1000,icon:5,shift:6});
                 }

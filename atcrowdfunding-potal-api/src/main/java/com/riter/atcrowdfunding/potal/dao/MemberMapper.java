@@ -3,6 +3,8 @@ package com.riter.atcrowdfunding.potal.dao;
 import com.riter.atcrowdfunding.bean.Member;
 import com.riter.atcrowdfunding.bean.MemberExample;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface MemberMapper {
@@ -27,4 +29,6 @@ public interface MemberMapper {
     int updateByPrimaryKeySelective(Member record);
 
     int updateByPrimaryKey(Member record);
+
+    Member MemberLogin(Map<String, Object> paramMap);
 }

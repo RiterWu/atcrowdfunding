@@ -38,7 +38,7 @@
         <dispatcher>FORWORD<dispatcher>
         过滤器执行顺序：
         在同等过滤规则下，filter_mapping在前的先执行；
-        lese 具体>全局。
+        else 具体>全局。
     -->
 
     <!-- 字符编码过滤器
@@ -65,8 +65,7 @@
     会读取隐含参数："_method"  -->
     <filter>
       <filter-name>HiddenHttpMethodFilter</filter-name>
-      <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter
-      </filter-class>
+      <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
     </filter>
     <filter-mapping>
       <filter-name>HiddenHttpMethodFilter</filter-name>

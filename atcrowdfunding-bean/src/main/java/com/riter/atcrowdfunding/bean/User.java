@@ -1,6 +1,8 @@
 package com.riter.atcrowdfunding.bean;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private Integer id;
 
     private String loginacct;
@@ -61,4 +63,7 @@ public class User {
         this.createtime = createtime == null ? null : createtime.trim();
     }
 
+    public static String getUserKey(){
+        return "user:";
+    }
 }
